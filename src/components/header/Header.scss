@@ -1,0 +1,26 @@
+header {
+  background: rgba(16, 155, 233, 1);
+  padding: 20px 0;
+  nav {
+    display: flex;
+    justify-content: center;
+    ul {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      @media (max-width: 907px) {
+        flex-wrap: wrap;
+        gap: 0;
+        justify-content: center;
+      }
+      a {
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+      }
+      .active {
+        color: red;
+      }
+    }
+  }
+}

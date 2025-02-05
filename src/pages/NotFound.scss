@@ -1,0 +1,23 @@
+.not-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  h1 {
+    color: red;
+  }
+  .back-to {
+    padding: 10px;
+    background: red;
+    border-radius: 15px;
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+    &:hover {
+      background: rgb(0, 0, 0);
+      color: #ff0000;
+    }
+  }
+}
