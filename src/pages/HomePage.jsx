@@ -11,6 +11,8 @@ const HomePage = () => {
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 5;
 
   async function getPosts() {
     try {
@@ -47,7 +49,15 @@ const HomePage = () => {
     } else {
       setFilteredPosts(posts);
     }
+    setCurrentPage(1);
   }, [searchText, posts]);
+
+  // Pagination logikasi
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
   return (
     <div className="container">
@@ -56,8 +66,8 @@ const HomePage = () => {
           <Loading />
         ) : (
           <Fragment>
-            {filteredPosts.length > 0 ? (
-              filteredPosts.map((post, index) => <Card {...post} key={index} />)
+            {currentPosts.length > 0 ? (
+              currentPosts.map((post, index) => <Card {...post} key={index} />)
             ) : (
               <div className="news_father">
                 <h1 className="news-p">Yangiliklar topilmadi.</h1>
@@ -66,6 +76,45 @@ const HomePage = () => {
           </Fragment>
         )}
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            style={{
+              padding: "10px",
+              border: "none",
+              backgroundColor: "purple",
+              color: "white",
+              cursor: "pointer",
+              borderRadius: "15px",
+            }}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Prev
+          </button>
+          <span>
+            {currentPage} / {totalPages}
+          </span>
+          <button
+            style={{
+              padding: "10px",
+              border: "none",
+              backgroundColor: "purple",
+              color: "white",
+              cursor: "pointer",
+              borderRadius: "15px",
+            }}
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };
